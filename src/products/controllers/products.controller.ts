@@ -13,9 +13,9 @@ import {
   // ParseIntPipe,
 } from '@nestjs/common';
 
-import { Response } from 'express';
-import { ParseIntPipe } from '../common/parse-int.pipe';
-import { CreateProductDto, UpdateProductDto } from './../dtos/products.dtos';
+import { Response, json } from 'express';
+import { ParseIntPipe } from '../../common/parse-int.pipe';
+import { CreateProductDto, UpdateProductDto } from '../dtos/products.dtos';
 
 import { ProductsService } from './../services/products.service';
 
@@ -33,6 +33,17 @@ export class ProductsController {
     //   message: `products limit=> ${limit} offset=> ${offset} brand=> ${brand}`,
     // };
     return this.productsService.findAll();
+  }
+  @Get('pokemon')
+  getPokemon() {
+    return this.productsService.getPokemon();
+  }
+
+  @Get('pokemonObserver')
+  getPokemonObserver() {
+    this.productsService
+      .getPokemonObserver()
+      .subscribe((data) => JSON.parse(data.data));
   }
 
   @Get('filter')
