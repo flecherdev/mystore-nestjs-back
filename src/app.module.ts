@@ -5,9 +5,20 @@ import { ProductModule } from './products/product.module';
 import { UsersModule } from './users/users.module';
 import { HttpModule, HttpService } from '@nestjs/axios';
 import { DatabaseModule } from './database/database.module';
+import { ConfigModule } from '@nestjs/config';
+import { environments } from '../environments';
 
 @Module({
-  imports: [ProductModule, UsersModule, HttpModule, DatabaseModule],
+  imports: [
+    ProductModule,
+    UsersModule,
+    HttpModule,
+    DatabaseModule,
+    ConfigModule.forRoot({
+      envFilePath: environments[process.env.NODE_ENV] || '.env',
+      isGlobal: true,
+    }),
+  ],
   controllers: [AppController],
   providers: [
     AppService,
